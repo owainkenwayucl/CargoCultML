@@ -3,6 +3,7 @@
 MAX_DEPTH=4096
 UNLIMITED_DEPTH=False
 TAG_NAME="CCML_TAG_NAME"
+CONTENTS_NAME="CCMS_TAG_CONTENTS"
 
 # Check to see if current depth is OK.
 def depth_ok(depth): 
@@ -55,9 +56,11 @@ def process_tag(t):
 # If there are = there are still fields left to process in the rest.
         while "=" in rest:
             var = rest.split("=", 1)[0].strip()
-# if a field name is the same as TAG_NAME append a _
+# if a field name is the same as TAG_NAME/CONTENTS_NAME append a _
             if (var == TAG_NAME):
                 var = TAG_NAME + "_"
+            if (var == CONTENTS_NAME):
+                var = CONTENTS_NAME + "_"
             rest = rest.split("=",1)[1].strip()
 # Default to val of var is the rest of the text.
             val = rest

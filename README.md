@@ -7,7 +7,7 @@ The plan for this project is to write a library that converts simple documents t
 ```xml
 <xml>
 <item>
-<tag>Some data</tag>
+<tag x=100>Some data</tag>
 <tag2>Some other data</tag2>
 </item>
 </xml>
@@ -16,7 +16,15 @@ The plan for this project is to write a library that converts simple documents t
 Become *something* like: 
 
 ```python
-[{'tag2': 'Some other data', 'tag': 'Some data'}]
+[{'tag_name':'xml', 
+  'contents':[{'tag_name':'item',
+               'contents':[{'tag_name':'tag', 
+                                   'x':'100', 
+                            'contents':['Some data']},
+                           {'tag_name':'tag2', 
+                            'contents':['Some other data']}]
+              }]
+}]
 ```
 
 *(exact details to be determined, e.g. when something becomes a list or a dict!)*
