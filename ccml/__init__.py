@@ -3,7 +3,7 @@
 MAX_DEPTH=4096
 UNLIMITED_DEPTH=False
 TAG_NAME="CCML_TAG_NAME"
-CONTENTS_NAME="CCMS_TAG_CONTENTS"
+CONTENTS_NAME="CCML_TAG_CONTENTS"
 
 # Check to see if current depth is OK.
 def depth_ok(depth): 
