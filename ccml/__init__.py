@@ -111,3 +111,21 @@ def close_tag(tag, rest, depth):
     ret_val=[contents,remains]
 
     return ret_val
+
+# The main function for parsing a string.  
+# Loop over string running split_out_tag until we run out of string.
+def process_ccml(s):
+    ret_val = []
+
+    remainder = s
+
+    while (remainder != ""):
+        temp = split_out_tag(remainder)
+        if len(temp) > 1:
+            for a in temp[:-1]:
+                ret_val.append(a)
+            remainder = temp[-1]
+        else:
+            ret_val.append(temp)
+            remainder = ""
+    return ret_val
