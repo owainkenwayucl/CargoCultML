@@ -21,7 +21,7 @@ def split_out_tag(s, depth=1):
 # If there is, append it to ret_val.
                 left_split = s.split("<", 1)
                 if (len(left_split[0]) > 0): 
-                    ret_val.append(left_split[0])
+                    ret_val.append(left_split[0].strip())
 # Do a right split to see if there's text after the tag.
                 right_split = left_split[1].split(">", 1)
 # Use close_tag to work out what's inside thet tag.
@@ -33,7 +33,7 @@ def split_out_tag(s, depth=1):
                 ret_val.append(tag)
 # If there's left over text append it.
                 if (len(right_split[1]) > 0):
-                    ret_val.append(right_split[1])
+                    ret_val.append(right_split[1].strip())
 # If there's no tag return a list with just the text as a single item.
             else:
                 ret_val.append(s)
