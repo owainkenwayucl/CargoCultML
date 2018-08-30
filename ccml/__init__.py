@@ -24,8 +24,12 @@ def split_out_tag(s, depth=1):
                     ret_val.append(left_split[0])
 # Do a right split to see if there's text after the tag.
                 right_split = left_split[1].split(">", 1)
-# Append the tag to ret_val.
+# Use close_tag to work out what's inside thet tag.
                 tag = process_tag(right_split[0])
+                temp = close_tag(tag[TAG_NAME], right_split[1], depth)
+                tag[CONTENTS_NAME] = temp[0]
+                right_split[1] = temp[1]
+# Append the tag to ret_val.
                 ret_val.append(tag)
 # If there's left over text append it.
                 if (len(right_split[1]) > 0):
@@ -77,4 +81,33 @@ def process_tag(t):
                     rest = rest.split(" ",1)[1].strip()
             ret_val[var] = val
     ret_val[TAG_NAME] = tag
+    return ret_val
+
+# Attempt to generate list for a tage which looks like:
+# [contents, rest of text]
+# If the next detected tag is not the closing tag split out the tag.
+# This ends up being recursive across the two functions.
+# This function is a mess because I've had too much coffee and not enough
+# thought.
+def close_tag(tag, rest, depth):
+    ret_val = []
+    parts = rest.split("<",1)
+    contents = parts[0]
+    parts = parts[1].split(">",1)
+    remains = ""
+    next_tag = ""
+    if (len(parts) > 1):
+        remains = parts[1]
+    next_tag = parts[0]
+
+    if (next_tag != "/" + tag):
+        temp = split_out_tag(rest, depth+1)
+        contents = temp[:-1]
+        remains = temp[-1]
+        temp2 = close_tag(tag, remains, depth + 1)
+        contents = [contents ,temp2[0]]
+        remains = temp2[1]
+
+    ret_val=[contents,remains]
+
     return ret_val
